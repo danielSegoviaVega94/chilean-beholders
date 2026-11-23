@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crónica: El Gusano Púrpura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Alegreya+Sans:wght@400;700&family=Alegreya+Sans+SC:wght@700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: manual de jugador de D&D, épico y cómplice, para que la mesa reviva la noche.
+   IDEA: una página arrancada del libro de campaña: portada de cuero, pergamino, bloques de estadísticas y mapa en tinta.
+   PICTURE: la viñeta del gusano en marco dorado; el gusano como bloque de monstruo; mapa sepia de la ruta.
+   COLOUR and TYPE: pergamino, rojo sangre de dragón, oro viejo; Cinzel + EB Garamond + Alegreya Sans para los bloques.
+   LAYOUT: portada de cuero, luego pergamino a dos columnas como el libro; bloques y notas laterales intercalados. */
+:root{color-scheme:light;--parch:#f1e4c6;--parch2:#fbf2dc;--ink:#2b1d12;--mute:#6b5640;--red:#7a1f0f;--blood:#922610;--gold:#c9a227;--leather:#2a0f0a;--note:#e3e6c6;--noteb:#4b5a2b}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;color:var(--ink);font:18px/1.55 "EB Garamond",Georgia,serif;overflow-x:clip;
+ background:var(--parch) radial-gradient(ellipse at 15% 10%,rgba(255,250,235,.7),transparent 50%),radial-gradient(ellipse at 85% 60%,rgba(170,130,70,.18),transparent 55%),radial-gradient(ellipse at 30% 90%,rgba(150,110,60,.15),transparent 50%);background-attachment:fixed}
+h1,h2,h3{font-family:Cinzel,serif;color:var(--red);line-height:1.08;text-wrap:balance;margin:0 0 .35em}
+h2{font-size:clamp(30px,4.2vw,44px);border-bottom:3px solid var(--gold);padding-bottom:6px}
+h3{font-size:22px}
+p{margin:0 0 .9em;max-width:70ch}
+a{color:var(--red)}
+.band{padding:clamp(30px,4vw,60px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.lead::first-letter{float:left;font:900 4.2em/0.82 "Cinzel Decorative",serif;color:var(--red);margin:6px 10px 0 0}
+.sc{font-family:"Alegreya Sans SC",sans-serif;letter-spacing:.02em}
+.note{font-size:15px;color:var(--mute);font-style:italic}
+/* portada de cuero */
+.cover{background:var(--leather) radial-gradient(ellipse at 50% 0%,#5a1a10,transparent 70%);color:#f1e4c6;border-bottom:6px double var(--gold)}
+.cover h1{font-family:"Cinzel Decorative",serif;font-weight:900;color:var(--gold);font-size:clamp(38px,6.4vw,70px);text-align:center;text-shadow:0 2px 0 #000,0 0 24px rgba(201,162,39,.35)}
+.cover .sub{text-align:center;font-family:Cinzel,serif;color:#e8d6a8;letter-spacing:.06em;margin:0 auto 26px;font-size:clamp(16px,2vw,20px)}
+.hero{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(20px,3.5vw,52px);align-items:center}
+.frame{display:block;padding:10px;background:linear-gradient(135deg,#8a6d1c,#e6c65c 40%,#8a6d1c 60%,#d9b74a);border:0;border-radius:4px;box-shadow:0 18px 40px rgba(0,0,0,.6);cursor:zoom-in;transition:transform .3s}
+.frame:hover,.frame:focus-visible{transform:translateY(-4px);outline:3px solid #f1e4c6}
+.frame img{display:block;width:100%;height:auto;border:2px solid #000}
+.scroll-card{background:var(--parch2);color:var(--ink);border-radius:3px;padding:22px 24px;box-shadow:0 10px 30px rgba(0,0,0,.5);position:relative}
+.scroll-card:before,.scroll-card:after{content:"";position:absolute;left:-6px;right:-6px;height:14px;background:linear-gradient(#c9a227,#7a5a10);border-radius:7px}
+.scroll-card:before{top:-7px}.scroll-card:after{bottom:-7px}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;margin:14px 0 4px}
+.kpi b{display:block;font:700 clamp(30px,4.4vw,42px)/1 Cinzel,serif;color:var(--blood)}
+.kpi span{font-size:15px;color:var(--mute)}
+@media(max-width:700px){.hero{grid-template-columns:1fr}}
+/* navegación */
+nav{position:sticky;top:0;z-index:5;background:var(--red);border-bottom:3px solid var(--gold)}
+.scroll{overflow-x:auto;display:flex;gap:2px;padding:4px max(5vw,16px);white-space:nowrap}
+.scroll a{flex:none;color:#f6e7c1;text-decoration:none;font:600 16px Cinzel,serif;padding:10px 12px;min-height:44px;display:flex;align-items:center;border-radius:3px}
+.scroll a:hover,.scroll a:focus-visible{background:rgba(0,0,0,.25);outline:2px solid var(--gold)}
+@media(max-width:900px){nav{position:static}}
+html{scroll-padding-top:70px;scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.orn{display:block;width:min(420px,80%);height:22px;margin:0 auto}
+/* dos columnas tipo libro */
+.book{columns:2 340px;column-gap:44px;column-rule:1px solid rgba(122,31,15,.25)}
+.book>*{break-inside:avoid}
+.aside{background:var(--note);border-top:3px solid var(--noteb);border-bottom:3px solid var(--noteb);padding:12px 16px;margin:0 0 1em;font-family:"Alegreya Sans",sans-serif;font-size:16px;box-shadow:0 3px 6px rgba(0,0,0,.12)}
+.aside h3{font:700 18px "Alegreya Sans SC",sans-serif;color:var(--ink);margin-bottom:4px}
+/* fichas */
+.sheets{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
+.sheet{background:var(--parch2);border:2px solid var(--red);outline:1px solid var(--gold);outline-offset:-7px;padding:18px 18px 14px;box-shadow:0 6px 14px rgba(60,30,10,.18);display:flex;flex-direction:column}
+.sheet header{display:flex;gap:12px;align-items:center;margin-bottom:6px}
+.sheet header svg{flex:none;width:52px;height:52px}
+.sheet h3{margin:0;font-size:24px}
+.sheet .cls{font-style:italic;color:var(--mute);font-size:16px;line-height:1.25}
+.line{height:5px;margin:8px 0;background:linear-gradient(90deg,var(--blood),var(--blood) 70%,transparent)}
+.abil{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;text-align:center;font-family:"Alegreya Sans",sans-serif}
+.abil div{border:1px solid rgba(122,31,15,.4);border-radius:4px;padding:4px 2px;background:#fff8e6}
+.abil small{display:block;font:700 11.5px "Alegreya Sans SC",sans-serif;color:var(--red)}
+.abil b{font-size:19px}
+.sheet ul{margin:6px 0 8px;padding-left:18px;font-size:16.5px}
+.sheet .star{margin-top:auto;font-style:italic;border-top:1px dashed var(--red);padding-top:8px;font-size:16.5px}
+/* ruta */
+.route{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:30px;align-items:start}
+.map{margin:0;background:#efdcae;border:3px solid #5a3a1a;box-shadow:inset 0 0 50px rgba(120,80,30,.45),0 8px 18px rgba(60,30,10,.25);border-radius:2px}
+.map svg{display:block;width:100%;height:auto}
+.times{list-style:none;margin:0;padding:0}
+.times li{display:grid;grid-template-columns:5.4em minmax(0,1fr);gap:12px;padding:9px 0;border-bottom:1px solid rgba(122,31,15,.2)}
+.times time{font:700 19px Cinzel,serif;color:var(--blood);white-space:nowrap}
+.times b{display:block;font-family:Cinzel,serif;font-size:16px}
+@media(max-width:820px){.route{grid-template-columns:1fr}}
+/* bloque de monstruo */
+.combat{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:30px;align-items:start}
+.stat{background:#fdf1dc;font:16px/1.4 "Alegreya Sans",sans-serif;padding:14px 18px;border-top:6px solid #e69a28;border-bottom:6px solid #e69a28;box-shadow:0 0 0 1px #9c8c72,0 6px 14px rgba(0,0,0,.2)}
+.stat h3{font:700 28px Cinzel,serif;color:var(--blood);margin:0}
+.stat .t{font-style:italic;margin-bottom:6px}
+.stat .red{color:var(--blood)}
+.taper{display:block;width:100%;height:6px;margin:8px 0}
+.stat p{margin:0 0 .5em}
+.stat h4{font:400 21px "Alegreya Sans SC",sans-serif;color:var(--blood);border-bottom:1px solid var(--blood);margin:12px 0 6px}
+.bars .bar{display:grid;grid-template-columns:6.2em minmax(0,1fr) 3em;gap:10px;align-items:center;margin:8px 0;font-family:"Alegreya Sans",sans-serif}
+.bar i{display:block;height:20px;width:var(--w);background:linear-gradient(90deg,#5e130a,var(--blood));border-radius:2px 10px 10px 2px;transform-origin:left;animation:grow 1s ease-out both}
+.bar i.g{background:linear-gradient(90deg,#3c3c3c,#8a7a66)}
+.bar em{font-style:normal;font-weight:700;text-align:right;white-space:nowrap}
+@keyframes grow{from{transform:scaleX(0)}}
+@media(prefers-reduced-motion:reduce){.bar i{animation:none}}
+.init{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:6px 0 18px}
+.init li{display:flex;align-items:center;gap:8px;background:var(--parch2);border:1px solid var(--red);border-radius:30px;padding:4px 14px 4px 4px;font-family:"Alegreya Sans",sans-serif;font-weight:700}
+.init li span{width:34px;height:34px;border-radius:50%;background:var(--red);color:#f6e7c1;display:grid;place-items:center;font:700 15px Cinzel,serif}
+.rounds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:26px}
+.round{background:var(--parch2);border:1px solid rgba(122,31,15,.35);padding:14px 16px;box-shadow:0 4px 10px rgba(60,30,10,.12)}
+.round ol{margin:0;padding-left:20px;font-size:16.5px}.round li{margin:6px 0}
+.dmg{display:inline-block;font:700 13px "Alegreya Sans",sans-serif;background:var(--blood);color:#fff3d6;padding:0 7px;border-radius:9px;white-space:nowrap}
+.dice{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:12px;margin-top:18px}
+.die{display:flex;gap:12px;align-items:center;font-size:16px}
+.die svg{flex:none;width:50px;height:50px}
+@media(max-width:900px){.rounds,.combat{grid-template-columns:1fr}}
+/* tablas */
+table{border-collapse:collapse;width:100%;font:16px "Alegreya Sans",sans-serif}
+th{font:700 15px "Alegreya Sans SC",sans-serif;color:var(--red);text-align:left;padding:8px}
+td{padding:8px;vertical-align:top}
+tbody tr:nth-child(odd){background:rgba(224,229,193,.75)}
+td.n,th.n{text-align:right;white-space:nowrap}
+tfoot td{font-weight:700;border-top:2px solid var(--red)}
+.loot{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:30px}
+.items{list-style:none;padding:0;margin:0}
+.items li{padding:8px 0 8px 30px;position:relative;border-bottom:1px solid rgba(122,31,15,.18)}
+.items li:before{content:"";position:absolute;left:4px;top:15px;width:12px;height:12px;background:var(--gold);transform:rotate(45deg);border:1px solid #6b4f0e}
+@media(max-width:820px){.loot{grid-template-columns:1fr}}
+/* mundo */
+.who{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:14px}
+.who div{background:var(--parch2);padding:12px 14px;border-left:4px solid var(--red);font-size:16.5px}
+.who b{font-family:Cinzel,serif;color:var(--red)}
+.tag{font:700 12.5px "Alegreya Sans SC",sans-serif;color:var(--mute)}
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:22px}
+.quotes figure{margin:0}
+.quotes blockquote{margin:0;font-size:22px;font-style:italic;line-height:1.3;color:var(--red)}
+.quotes figcaption{font-size:15px;color:var(--mute);margin-top:4px}
+.tarot{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:20px}
+.tc{background:linear-gradient(170deg,#3b1410,#1a0907);color:#f1e4c6;border:3px solid var(--gold);border-radius:12px;padding:18px;text-align:center;box-shadow:0 8px 18px rgba(0,0,0,.35)}
+.tc svg{width:64px;height:64px;display:block;margin:0 auto 8px}
+.tc h3{color:var(--gold)}
+.tc p{font-size:16.5px;margin:0 auto}
+.hooks{list-style:none;padding:0;margin:0;columns:2 320px;column-gap:40px}
+.hooks li{break-inside:avoid;padding:8px 0 8px 34px;position:relative}
+.hooks li:before{content:"";position:absolute;left:2px;top:12px;width:18px;height:18px;border:2px solid var(--red);background:var(--parch2)}
+.dark{background:var(--leather);color:#f1e4c6}.dark h2{color:var(--gold)}.dark .note{color:#cdb98d}
+footer{text-align:center;padding:26px 16px 40px;font-size:15px;color:var(--mute)}
+.lb{position:fixed;inset:0;background:rgba(15,5,3,.93);display:none;z-index:20;overflow:auto;padding:16px}
+.lb.on{display:block}
+.lb img{display:block;max-width:min(100%,1000px);height:auto;margin:50px auto 16px;border:6px solid var(--gold)}
+.lb button{position:fixed;top:12px;right:12px;min-height:44px;font:700 16px Cinzel,serif;background:var(--gold);color:#2a0f0a;border:2px solid #000;border-radius:4px;padding:6px 16px;cursor:pointer}
+@media(max-width:600px){body{font-size:17px}table{font-size:14px}.stack thead{display:none}.stack tr{display:grid;padding-block:8px}.stack td{display:flow-root;border:0;padding:2px 0;padding-inline-start:8em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em;white-space:normal;font-weight:700;color:var(--red)}.stack td:empty{display:none}}
+</style><script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <defs>
+  <symbol id="orn" viewBox="0 0 420 22"><path d="M0 11H180M240 11H420" stroke="#922610" stroke-width="2"/><path d="M190 11l20-9 20 9-20 9z" fill="#c9a227" stroke="#7a1f0f" stroke-width="1.5"/><circle cx="210" cy="11" r="3" fill="#7a1f0f"/><path d="M150 11l12-5v10zM270 11l-12-5v10z" fill="#922610"/></symbol>
+  <symbol id="taper" viewBox="0 0 400 6" preserveAspectRatio="none"><polyline points="0,0 400,3 0,6" fill="#922610"/></symbol>
+  <symbol id="d20" viewBox="0 0 48 48"><path d="M24 3 44 14v20L24 45 4 34V14Z" stroke="#2b1d12" stroke-width="2.4"/><path d="M24 3 14 30h20Zm-10 27L4 14m30 16 10-16M14 30l10 15 10-15" stroke="#2b1d12" stroke-width="1.1" fill="none" opacity=".5"/></symbol>
+ </defs>
+</svg>
+
+<header class="cover band">
+ <div class="wrap">
+  <h1>El Gusano Púrpura</h1>
+  <p class="sub">Crónica de campaña · Del desierto al bosque</p>
+  <div class="hero">
+   <button class="frame" id="cover" aria-label="Ver la viñeta en grande">
+    <img src="vineta-gusano.jpg" width="1344" height="1800" alt="Página de cómic: el gusano púrpura emerge de noche, traga a Ártamo, Takemura y Grom contraatacan, y Ártamo cae del cielo con su espada mientras Champi lanza Volar.">
+   </button>
+   <div class="scroll-card">
+    <p class="lead">Tras salvar la ciudad de la invocación de Shar, la party parte con la última caravana de heridos. Cruza el desierto de noche, enfrenta a un Gusano Púrpura a las tres de la mañana y llega al bosque al amanecer, donde una entidad antigua le habla a Champi.</p>
+    <div class="kpis">
+     <div class="kpi"><b>15.000</b><span>PX entregados en la sesión</span></div>
+     <div class="kpi"><b>282</b><span>daño total al gusano en 3 rondas</span></div>
+     <div class="kpi"><b>~100 m</b><span>altura del golpe final de Ártamo</span></div>
+     <div class="kpi"><b>1.ª</b><span>party de esta mesa que sobrevive al gusano</span></div>
+    </div>
+    <p class="note" style="margin:8px 0 0">Toca la viñeta para verla completa.</p>
+   </div>
+  </div>
+ </div>
+</header>
+
+<nav aria-label="Secciones"><div class="scroll">
+ <a href="#antes">Antes</a><a href="#party">La party</a><a href="#ruta">Ruta</a><a href="#combate">Combate</a><a href="#px">Experiencia</a><a href="#botin">Botín</a><a href="#mundo">Mundo</a><a href="#frases">Frases</a><a href="#cartas">Cartas</a><a href="#ganchos">Próxima sesión</a>
+</div></nav>
+
+<section class="band" id="antes"><div class="wrap">
+ <h2>Lo que ocurrió antes</h2>
+ <div class="book">
+  <p>La party descendió a una necrópolis muy antigua para detener a un ser que se invocaba a través de un niño. Nadie sabe aún si el niño fue llamado, invocado o poseído. En las mazmorras encontraron cubos gelatinosos casi transparentes y Nothics, aberraciones de un solo ojo que buscan magia sin descanso. Gracias a Champi entendieron su idioma, y descubrieron que un <i>Dispel</i> los hacía desaparecer porque estaban invocados.</p>
+  <div class="aside"><h3>En memoria</h3><b>Samantha</b>, el Nothic sobreviviente, corrió hacia una habitación gritando que sentía magia, levitó hasta el techo y quedó clavado en sus púas. No duró ni cinco minutos. <b>Rocky</b>, el fiel compañero de Champi, explotó en un duelo mágico contra la sacerdotisa. Solo volvieron los pedacitos.</div>
+  <p>En el santuario se abría un portal para la diosa Shar. La sacerdotisa resultó ser el niño, controlado por una entidad. Mientras la party buscaba ayuda, el pueblo se llenó de Nothics, aberraciones y una criatura gigantesca. Volvieron con un plan y un tremendo rayo-cañón, y la detuvieron. El niño quedó convertido en piedra; lo guardaron en la Bag of Holding y la estatua se quebró al sacarla.</p>
+  <p>El líder del gremio murió en la defensa. Su hija se llevó sus cenizas mágicas para cumplir una última petición, y su hijo, el guerrero, les contó que la Torre de Magos era el centro de evacuación. Allí los esperaba el mago jefe que le enseñó a Champi a levantar muertos. Antes de partir rescataron a la chica del bar, esposa del paladín desaparecido por el gobierno local. Fue una escena visceral: murió un inocente, pero la salvaron, se llevaron un caballo y alcanzaron la última caravana.</p>
+ </div>
+</div></section>
+
+<svg class="orn"><use href="#orn"/></svg>
+
+<section class="band" id="party"><div class="wrap">
+ <h2>La party</h2>
+ <p>Cinco aventureros, una carreta con techo de callampa y un caballo llamado Tesla «con piloto automático». Los números de cada ficha salen de las tiradas y del combate de esta sesión.</p>
+ <div class="sheets" id="sheets"></div>
+</div></section>
+
+<section class="band" id="ruta"><div class="wrap">
+ <h2>La ruta: un día y una noche</h2>
+ <div class="route">
+  <figure class="map">
+   <svg viewBox="0 0 640 520" role="img" aria-label="Mapa boceto: ciudad al sur, caravana al norte hasta el oasis cerca del Imperio, desvío nocturno al noroeste por el desierto donde atacó el gusano, y entrada al bosque; la Aldea Dali al norte del bosque y el corazón del bosque muy al sur.">
+    <g font-family="EB Garamond" fill="#3b2410">
+    <path d="M0 0H640V56C560 68 480 48 400 62S240 50 160 64 40 52 0 60Z" fill="#7a1f0f" opacity=".12"/>
+    <path d="M0 60C40 52 120 68 160 64S320 52 400 62 560 68 640 56" stroke="#7a1f0f" stroke-width="2.5" stroke-dasharray="9 6" fill="none"/>
+    <text x="440" y="36" font-family="Cinzel" font-size="24" fill="#7a1f0f">EL IMPERIO</text>
+    <path d="M0 118C40 98 90 108 130 94 170 82 200 118 220 148 240 188 220 238 200 278 170 328 120 358 70 378 40 390 10 398 0 398Z" fill="#5b6b2e" opacity=".22"/>
+    <g fill="none" stroke="#3d4a1c" stroke-width="1.8">
+     <defs><g id="tree"><path d="M0 0c-10 0-12-10-6-14-2-9 10-12 12-5 8-3 13 6 7 11 4 6-4 10-13 8Z"/><path d="M1 0v9"/></g></defs>
+     <use href="#tree" x="40" y="150"/><use href="#tree" x="74" y="128"/><use href="#tree" x="104" y="170"/><use href="#tree" x="60" y="200"/><use href="#tree" x="140" y="190"/><use href="#tree" x="30" y="334"/><use href="#tree" x="46" y="290"/><use href="#tree" x="150" y="270"/><use href="#tree" x="88" y="326"/><use href="#tree" x="20" y="120"/>
+    </g>
+    <text x="14" y="238" font-family="Cinzel" font-size="18" fill="#3d4a1c">Bosque selvático</text>
+    <g stroke="#a07a3a" fill="none" opacity=".6"><path d="M300 330c20-8 40-8 60 0M420 290c14-6 28-6 42 0M340 400c18-7 36-7 54 0M260 120c16-6 32-6 48 0"/></g>
+    <text x="320" y="370" font-family="Cinzel" font-size="18" fill="#8a6a30" opacity=".9">Desierto</text>
+    <path d="M62 84l8-12 8 12v10H62Z" fill="#c9a227" stroke="#3b2410" stroke-width="1.5"/>
+    <text x="84" y="92" font-size="19">Aldea Dali (meta)</text>
+    <path d="M70 100C80 110 96 110 110 114" stroke="#3b2410" stroke-dasharray="3 5" fill="none"/>
+    <g transform="translate(470 470)"><path d="M-14 10V-6h6v-8h6v8h4v-14h6v14h6V10Z" fill="#7a1f0f" stroke="#3b2410" stroke-width="1.5"/></g>
+    <text x="368" y="504" font-size="19">Ciudad · Torre de Magos</text>
+    <path d="M470 452C490 380 470 300 500 220 510 180 500 150 490 132" stroke="#7a1f0f" stroke-width="3" stroke-dasharray="10 7" fill="none"/>
+    <text x="510" y="330" font-size="17" transform="rotate(-78 510 330)">caravana · de día</text>
+    <circle cx="490" cy="120" r="12" fill="#5b8fa8" stroke="#3b2410" stroke-width="1.5"/>
+    <text x="468" y="92" text-anchor="end" font-size="18">Oasis · campamento</text>
+    <text x="468" y="110" text-anchor="end" font-size="16">~200 refugiados · a 15 km del Imperio</text>
+    <path d="M478 132C430 170 380 190 330 210 280 230 240 220 205 196" stroke="#3b2410" stroke-width="3" stroke-dasharray="10 7" fill="none"/>
+    <text x="330" y="234" font-size="17" font-style="italic">de noche, al noroeste</text>
+    <g transform="translate(404 150)" stroke="#3b2410" stroke-width="1.8" fill="none"><path d="M-14 4C-6-12 8-12 14 2"/><path d="M-4-2l-12-10M4-2l12-10"/></g>
+    <text x="386" y="156" text-anchor="end" font-size="15">grifo ~00:00</text>
+    <path d="M287 201L313 227M313 201L287 227" stroke="#922610" stroke-width="5" stroke-linecap="round"/>
+    <text x="250" y="262" font-family="Cinzel" font-size="17" fill="#922610">Gusano Púrpura · 03:00</text>
+    <circle cx="205" cy="196" r="7" fill="#f1e4c6" stroke="#3b2410" stroke-width="2"/>
+    <text x="214" y="186" font-size="16">08:00</text>
+    <path d="M207 204C214 236 214 268 210 300" stroke="#922610" stroke-width="1.6" fill="none"/>
+    <text x="196" y="316" font-size="15" fill="#922610">goblins talando (150 m al sur)</text>
+    <path d="M150 340C200 380 240 410 300 440 330 455 340 480 330 515" stroke="#6b4a2a" stroke-width="3" fill="none" stroke-dasharray="2 6" stroke-linecap="round"/>
+    <text x="282" y="414" font-size="15" fill="#6b4a2a" font-style="italic">raíz de la Entidad</text>
+    <text x="18" y="470" font-size="16">muy al sur, en la costa:</text>
+    <text x="18" y="490" font-size="16">el árbol-corazón</text>
+    <text x="18" y="510" font-size="16">y el druida Daegal</text>
+    <g transform="translate(590 440)"><circle r="26" fill="none" stroke="#3b2410" stroke-width="1"/><path d="M0-30L6 0 0 30-6 0Z" fill="#7a1f0f"/><path d="M-30 0L0 5 30 0 0-5Z" fill="#3b2410" opacity=".6"/><text x="-6" y="-34" font-family="Cinzel" font-size="15">N</text></g>
+    </g>
+   </svg>
+  </figure>
+  <div>
+   <ol class="times" id="times"></ol>
+   <p class="note" style="margin-top:12px">Mapa dibujado a partir de lo narrado en la mesa; no está a escala.</p>
+  </div>
+ </div>
+</div></section>
+
+<svg class="orn"><use href="#orn"/></svg>
+
+<section class="band" id="combate"><div class="wrap">
+ <h2>Encuentro: el Gusano Púrpura</h2>
+ <div class="combat">
+  <div class="stat">
+   <h3>Gusano Púrpura</h3>
+   <div class="t">Monstruosidad colosal, violeta, de ojos azul brillante</div>
+   <svg class="taper"><use href="#taper"/></svg>
+   <p><b class="red">Velocidad observada</b> 9 m por segundo bajo la arena</p>
+   <p><b class="red">Altura al emerger</b> más de 10 m</p>
+   <p><b class="red">Debilidades</b> ninguna (Impacto Certero de Ártamo)</p>
+   <p><b class="red">Coraza</b> quitinosa; los zombis no la atravesaron en la ronda 2</p>
+   <svg class="taper"><use href="#taper"/></svg>
+   <p><b class="red">Referencia 5e</b> VD 15 (13.000 PX) · CA 18 · 247 PG promedio</p>
+   <p><b class="red">Daño recibido en mesa</b> 282</p>
+   <h4>Acciones vistas</h4>
+   <p><b><i>Mordisco.</i></b> Crítico sobre Ártamo: 39 de daño perforante. Salvación de Destreza CD 19; al fallar (15), el objetivo es tragado.</p>
+   <p><b><i>Aguijón.</i></b> 19 de daño perforante más veneno. Takemura salvó Constitución (22) y recibió la mitad: 18 de veneno. Contra un zombi: 23 perforante, inmune al veneno.</p>
+   <p><b><i>Embestida.</i></b> Contra Grom: 14 contra CA 15 (gracias a Haste). Grom bloqueó con el hacha.</p>
+  </div>
+  <div>
+   <h3>Orden de iniciativa</h3>
+   <ol class="init" id="init"></ol>
+   <h3>Daño causado</h3>
+   <div class="bars" id="dealt"></div>
+   <p class="note">Champi: 67 de los zombis con Wither Strike y 31 de dos Proyectiles Mágicos. Scarlett: incluye 7 de Espíritus Guardianes.</p>
+   <h3 style="margin-top:18px">Daño recibido</h3>
+   <div class="bars" id="taken"></div>
+   <p class="note">Grom y Scarlett terminaron sin un rasguño.</p>
+  </div>
+ </div>
+ <div class="rounds" id="rounds"></div>
+ <h3 style="margin-top:28px">Dados memorables</h3>
+ <div class="dice" id="dice"></div>
+</div></section>
+
+<section class="band dark" id="px"><div class="wrap">
+ <h2>Experiencia verificada</h2>
+ <div class="loot">
+  <div>
+   <table class="stack" style="background:var(--parch2);color:var(--ink)">
+    <thead><tr><th>Quién</th><th>Motivo</th><th class="n">PX</th></tr></thead>
+    <tbody>
+     <tr><td>Toda la party</td><td>Vencer «legítimamente» a su primer Gusano Púrpura</td><td class="n">13.000</td></tr>
+     <tr><td>Ártamo</td><td>Golpe final desde el cielo</td><td class="n">+1.000</td></tr>
+     <tr><td>Champi</td><td>Diálogo con la Entidad del bosque (bonificación al cierre)</td><td class="n">+1.000</td></tr>
+    </tbody>
+    <tfoot><tr><td>Total</td><td></td><td class="n">15.000</td></tr></tfoot>
+   </table>
+   <p class="note" style="margin-top:12px">Los 13.000 coinciden con los PX de un monstruo de VD 15 en el Manual de Monstruos, que es el Gusano Púrpura.</p>
+  </div>
+  <div>
+   <h3 style="color:var(--gold)">Por personaje</h3>
+   <table class="stack" style="background:var(--parch2);color:var(--ink)">
+    <thead><tr><th>Personaje</th><th class="n">Parte</th><th class="n">Extra</th><th class="n">Total</th></tr></thead>
+    <tbody id="pxrows"></tbody>
+   </table>
+   <p class="note" style="margin-top:12px">El DM dijo «a repartir entre toda la party», sin precisar cómo. Esta tabla asume partes iguales entre los 5 personajes; los zombis de Champi no cuentan.</p>
+  </div>
+ </div>
+</div></section>
+
+<section class="band" id="botin"><div class="wrap">
+ <h2>Botín y provisiones</h2>
+ <div class="loot">
+  <div>
+   <h3>Del cadáver del gusano</h3>
+   <ul class="items">
+    <li>Quitina de gusano púrpura</li>
+    <li>8 colmillos imbuidos en ácido</li>
+    <li>El aguijón venenoso</li>
+    <li>Una gran glándula de veneno, muy valiosa en el mercado adecuado</li>
+    <li>Hongos violetas que brotaron del cuerpo: Champi probó uno y aprendió <b>Nube Apestosa</b> (nivel 3), y guarda uno extra que no gasta espacio de conjuro</li>
+   </ul>
+   <p class="note" style="margin-top:10px">Todo quedó guardado en la Bag of Holding a las 4:30.</p>
+  </div>
+  <div>
+   <div class="aside"><h3>Mochila de Ártamo</h3>Monedas de oro, corona de hierro, fuego de alquimista, mochila del gremio, cuerda de 5 m, yesqueros, tres antorchas, provisiones para 4 días, Bag of Holding, anillo de invisibilidad, el diamante, flechas de plata, madera con runas (tipo mina), pulsera mágica, daga reluciente y kit de disfraz.</div>
+   <div class="aside"><h3>Provisiones del grupo</h3>4 días de autonomía al partir, o 5 si racionan. Ártamo regaló media ración a un joven herido; en el bosque juntaron bayas rojas comestibles (las verdes son venenosas).</div>
+  </div>
+ </div>
+</div></section>
+
+<svg class="orn"><use href="#orn"/></svg>
+
+<section class="band" id="mundo"><div class="wrap">
+ <h2>Personajes, criaturas y lugares</h2>
+ <div class="who" id="who"></div>
+</div></section>
+
+<section class="band" id="frases"><div class="wrap">
+ <h2>Frases de la noche</h2>
+ <div class="quotes" id="quotes"></div>
+</div></section>
+
+<section class="band dark" id="cartas"><div class="wrap">
+ <h2>Las cartas del DM</h2>
+ <p>Al inicio el DM leyó cartas de tarot y pidió conservarlas hasta el final de la sesión. Esa misma noche el grupo le entregó a Champi un regalo de boda hecho entre todos: «las quemaduras valieron la pena».</p>
+ <div class="tarot">
+  <div class="tc"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M20 56h24L38 8H26Z" fill="none" stroke="#c9a227" stroke-width="2.5"/><path d="M14 30l-6-6M50 30l6-6M32 4v-2" stroke="#c9a227" stroke-width="2"/><path d="M26 22l12 6M24 36l16 6" stroke="#c9a227" stroke-width="1.5"/></svg><h3>La caída</h3><p>Como los reyes de Númenor y de Gondor: quienes suben alto también temen una gran caída. <i>(La transcripción empieza a mitad de esta carta.)</i></p></div>
+  <div class="tc"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 18h14v8a7 7 0 0 1-14 0ZM36 38h14v8a7 7 0 0 1-14 0Z" fill="none" stroke="#c9a227" stroke-width="2.5"/><path d="M26 28C34 30 36 34 40 38" stroke="#c9a227" stroke-width="2" stroke-dasharray="2 3" fill="none"/></svg><h3>La Templanza · Grom</h3><p>Grom solo quiere pelear, medir su fuerza y crecer. Hoy, quizá, un poco más contemplativo. Si mantiene la templanza, no le pasará nada.</p></div>
+  <div class="tc"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6l6 18h18l-14 11 5 18-15-11-15 11 5-18L8 24h18Z" fill="none" stroke="#c9a227" stroke-width="2.5"/></svg><h3>La Estrella</h3><p>La Estrella de la Tarde de Arwen: siempre hay un camino C, el que abre la creatividad cuando el mundo solo ofrece A o B.</p></div>
+ </div>
+</div></section>
+
+<section class="band" id="ganchos"><div class="wrap">
+ <h2>Para la próxima sesión</h2>
+ <ul class="hooks" id="hooks"></ul>
+</div></section>
+
+<footer>Crónica armada a partir de la transcripción de la sesión. Viñeta: arte del grupo.</footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Viñeta ampliada">
+ <button id="lbx">Cerrar</button>
+ <img src="vineta-gusano.jpg" alt="Página de cómic del combate contra el Gusano Púrpura, ampliada.">
+</div>
+
+<script>
+{
+const crest={
+ Scarlett:'<path d="M26 6v40M14 18h24" stroke="#c9a227" stroke-width="4"/><circle cx="26" cy="18" r="5" fill="#f1e4c6"/>',
+ Takemura:'<path d="M26 8v34M20 36h12" stroke="#f1e4c6" stroke-width="3.5"/><path d="M24 20C14 14 8 18 6 26c8-2 12 0 18 2M28 20c10-6 16-2 18 6-8-2-12 0-18 2" fill="#c9a227"/>',
+ Champi:'<path d="M10 26c0-12 32-12 32 0Z" fill="#c9a227"/><rect x="20" y="26" width="12" height="16" rx="4" fill="#f1e4c6"/><circle cx="18" cy="20" r="2.5" fill="#7a1f0f"/><circle cx="30" cy="18" r="2" fill="#7a1f0f"/>',
+ 'Ártamo':'<path d="M14 40L38 12M38 40L14 12" stroke="#f1e4c6" stroke-width="3.5"/><path d="M26 22l3 4-3 4-3-4Z" fill="#c9a227"/>',
+ Grom:'<path d="M18 44V10" stroke="#f1e4c6" stroke-width="4"/><path d="M18 12c14 0 20 6 20 14-8 0-14-2-20-4Z" fill="#c9a227"/>'
+};
+const party=[
+ {n:'Scarlett',c:'Clériga ciega',a:[18,9,31,0,'2.600'],h:['Abrió el combate: Llama Sagrada por 16 (el gusano sacó 1 natural)','Escudo de Fe sobre Ártamo, luego Espíritus Guardianes','+5 en trato con animales: conduce la carreta'],s:'Agarró de la oreja a Takemura después de que le pidiera a David una cita con ella.'},
+ {n:'Takemura',c:'Paladín alado, formado en los templos del Imperio',a:[16,20,66,37,'2.600'],h:['20 natural en Percepción: ubica al gusano a 100 m','Crítico + Divine Smite nivel 2: 52 de daño de un golpe','Recibió el aguijón y quedó en 27 PG'],s:'Gritó «¡ÁRTAMO!» al descargar el golpe más fuerte de la noche.'},
+ {n:'Champi',c:'Hongo nigromante, con 8 zombis',a:[11,9,98,0,'3.600'],h:['Tiny Hut: la carreta se volvió casa de hongo','Haste sobre Grom; zombis con Wither Strike: 67 de daño','Atrapó a Ártamo en caída libre con Volar'],s:'Un d20 crudo de 1 lo conectó con la Entidad del bosque.'},
+ {n:'Ártamo',c:'Guerrero de magia salvaje, de la Aldea Dali',a:[10,19,52,39,'3.600'],h:['Arcano 20 con ventaja: «Al fin descubriste tu potencial»','Crítico de 39: queda en 2 PG y es tragado','Fuerza la Magia Salvaje: gravedad invertida y teletransporte'],s:'Lanzó su espadón desde ~100 m y partió la cabeza del gusano: 52 de daño.'},
+ {n:'Grom',c:'Bárbaro orco',a:[6,17,35,0,'2.600'],h:['Percepción 20 (16+4): ve un grifo cruzar la luna','Furia, Frenesí y crítico de 30','Bloqueó la embestida con el hacha'],s:'Al bosque le preguntó cómo ser más fuerte: «Bebe agua, toma sol y descansa».'}
+];
+const lab=['Inic.','Perc.','Daño','Recib.','PX'];
+document.getElementById('sheets').innerHTML=party.map(p=>`<article class="sheet"><header><svg viewBox="0 0 52 52" aria-hidden="true"><path d="M26 2 48 10v16c0 14-10 22-22 24C14 48 4 40 4 26V10Z" fill="#7a1f0f" stroke="#c9a227" stroke-width="2"/>${crest[p.n]}</svg><div><h3>${p.n}</h3><div class="cls">${p.c}</div></div></header><div class="line"></div><div class="abil">${p.a.map((v,i)=>`<div><small>${lab[i]}</small><b>${v}</b></div>`).join('')}</div><ul>${p.h.map(x=>`<li>${x}</li>`).join('')}</ul><div class="star">${p.s}</div></article>`).join('');
+
+const times=[
+ ['9–10 h','Parte la caravana','Rumbo al norte, liderada por un anciano en una cabra montés. El pueblo los venera como héroes y les regala una carreta.'],
+ ['12–13 h','Descanso al sol','Ártamo lee el libro de Magia Salvaje; Champi levanta la callampa-techo con Tiny Hut. Una hora después, en marcha.'],
+ ['16–17 h','El desierto es generoso','Avance tranquilo, con Scarlett a las riendas.'],
+ ['Anochecer','Oasis de refugiados','Unas 200 personas entre tiendas y ruinas. Dejan a la chica herida con el clérigo David y oyen a un reclutador del Imperio.'],
+ ['20 h','Salen de noche','Desvío al noroeste por arena suelta, con turnos de 4 horas.'],
+ ['~0 h','Silueta en la luna','Grom ve un grifo a unos 300 m. No viene hacia ellos.'],
+ ['3 h','¡Temblor!','El Gusano Púrpura los sigue a 100 m. Comienza el combate.'],
+ ['4:30 h','Botín y relevo','Todo a la Bag of Holding. Scarlett conduce y se orienta con el sol (Supervivencia 11).'],
+ ['8 h','El bosque','Jungla cerrada. Champi toca una raíz antigua y contacta a la Entidad.']
+];
+document.getElementById('times').innerHTML=times.map(t=>`<li><time>${t[0]}</time><div><b>${t[1]}</b>${t[2]}</div></li>`).join('');
+
+const init=[['18','Scarlett'],['16','Takemura'],['11','Champi'],['10','Ártamo'],['6','Grom'],['6.º','Gusano']];
+document.getElementById('init').innerHTML=init.map(i=>`<li><span>${i[0]}</span>${i[1]}</li>`).join('');
+
+const bars=(id,rows,cls='')=>{document.getElementById(id).innerHTML=rows.map(r=>`<div class="bar"><span>${r[0]}</span><i class="${cls}" style="--w:${r[1]/98*100}%"></i><em>${r[1]}</em></div>`).join('')};
+bars('dealt',[['Champi',98],['Takemura',66],['Ártamo',52],['Grom',35],['Scarlett',31]]);
+bars('taken',[['Ártamo',39],['Takemura',37],['Un zombi',23]],'g');
+
+const R=[
+ ['Ronda 1',[['Scarlett','Se aleja 9 m y lanza Llama Sagrada; el gusano saca 1 natural',16],['Takemura','Intenta asustarlo con sus alas (salva con 15) y aplica Voto de Enemistad'],['Champi','Detiene la carreta, Haste a Grom y 8 zombis a la carga'],['Ártamo','Falsa Vida (+7, sube a 41 PG) y desenvaina dos espadas'],['Grom','Furia y hacha arrojadiza; le roza un ojo',5],['Gusano','Falla contra Grom; crítico a Ártamo por 39 y lo traga']]],
+ ['Ronda 2',[['Scarlett','Suelta el escudo y activa Espíritus Guardianes'],['Takemura','Falla el primero; crítico + Divine Smite nv. 2',52],['Champi','Los zombis no atraviesan la coraza; Proyectil Mágico nv. 3',18],['Ártamo','Gasta todo para forzar la Magia Salvaje: gravedad invertida, Escudo y teletransporte al cielo'],['Grom','Frenesí: crítico en el primer golpe',30],['Gusano','Recibe 7 de los Espíritus; aguijón a un zombi (23) y a Takemura (37)',7]]],
+ ['Ronda 3',[['Scarlett','Llama Sagrada',8],['Takemura','Marca del Cazador; acierta el primero',14],['Champi','Lucky (18): los zombis devoran partes blandas',67],['Champi','Proyectil Mágico',13],['Ártamo','Tomar Aliento (+8) y espadón lanzado desde ~100 m: 42 + 10 por la caída',52],['Champi','Recibe a Ártamo a 157 km/h y le lanza Volar']]]
+];
+document.getElementById('rounds').innerHTML=R.map(r=>`<div class="round"><h3>${r[0]}</h3><ol>${r[1].map(a=>`<li><b>${a[0]}:</b> ${a[1]}${a[2]?` <span class="dmg">${a[2]}</span>`:''}</li>`).join('')}</ol></div>`).join('');
+
+const d20=(v,f)=>`<svg viewBox="0 0 48 48" aria-hidden="true"><use href="#d20" fill="${f}"/><text x="24" y="30" text-anchor="middle" font-family="Cinzel" font-weight="700" font-size="14" fill="#2b1d12">${v}</text></svg>`;
+const dice=[['20','#e8c867','Takemura: 20 natural en Percepción y crítico con Smite.'],['20','#e8c867','Grom: crítico en Frenesí por 30.'],['20','#d9826e','Gusano: crítico a Ártamo por 39.'],['1','#b9c9a0','Gusano: 1 natural en Sabiduría ante Llama Sagrada.'],['1','#b9c9a0','Champi: un 1 crudo que despertó a la Entidad.']];
+document.getElementById('dice').innerHTML=dice.map(d=>`<div class="die">${d20(d[0],d[1])}<span>${d[2]}</span></div>`).join('');
+
+document.getElementById('pxrows').innerHTML=[['Scarlett',0],['Takemura',0],['Champi',1000],['Ártamo',1000],['Grom',0]].map(r=>`<tr><td>${r[0]}</td><td class="n">2.600</td><td class="n">${r[1]?'+1.000':'—'}</td><td class="n"><b>${(2600+r[1]).toLocaleString('es-CL')}</b></td></tr>`).join('');
+
+const who=[
+ ['David, el cuervo','PNJ · clérigo','Sana enfermos en el oasis. Ante la propuesta de cita de Takemura, respondió con una Zona de Silencio.'],
+ ['La chica del bar','PNJ · herida','Esposa del paladín desaparecido. Apuñalada y con fiebre; quedó con David y una nota firmada «Con amor, Champi».'],
+ ['El anciano de la cabra','PNJ · guía','Sobreviviente que lidera la caravana de heridos.'],
+ ['El joven del ojo herido','PNJ · refugiado','Recibió media ración de Ártamo y la compartió con una anciana encorvada.'],
+ ['El reclutador','PNJ · misterio','Busca gente para cruzar al Imperio. El campamento se divide en dos bandos. Takemura no alcanzó a ver insignias (sacó 7).'],
+ ['Druida Daegal','PNJ · por conocer','Protege el corazón del bosque, al sur. Puede enseñarle a Champi a mejorar su hechizo para revivir.'],
+ ['La Entidad del bosque','Presencia antigua','Controla el bosque desde un árbol gigante en la costa sur. No llega hasta la Aldea Dali. Los goblins «le hacen daño».'],
+ ['Gusano Púrpura','Criatura · derrotado','Veneno letal, coraza quitinosa, sin debilidades.'],
+ ['Grifo','Criatura · avistado','Cuatro patas y alas, cruzando la luna llena. Champi lo identificó con una tirada de Inteligencia de más de 20.'],
+ ['Goblins','Criatura · por enfrentar','Talan un árbol a unos 150 m al sur de la entrada al bosque.'],
+ ['Aldea Dali','Lugar · destino','Hogar de Ártamo, al norte del bosque. Toman la vuelta larga para no pasar por la migración del Imperio.'],
+ ['El burro','En el recuerdo','Perdieron su carreta y su burro, que hoy alimenta a niños huérfanos.']
+];
+document.getElementById('who').innerHTML=who.map(w=>`<div><div class="tag">${w[1]}</div><b>${w[0]}</b><br>${w[2]}</div>`).join('');
+
+const q=[
+ ['¡ÁRTAMO!','Takemura, al descargar el Divine Smite'],
+ ['Te necesito vivo.','La deidad de Ártamo, dentro del gusano'],
+ ['Bebe agua, toma sol y descansa.','La Entidad del bosque, a Grom'],
+ ['No le pidas comida a un hongo, por favor.','Ártamo, al joven hambriento'],
+ ['El caballo se va a llamar Tesla y tiene piloto automático.','Ártamo'],
+ ['¿Te puedo conseguir una cita con mi hermana?','Takemura, a David'],
+ ['Me hace daño.','La Entidad, sobre los goblins'],
+ ['Es la primera party que sobrevive al encuentro con el gusano.','El DM, al cierre']
+];
+document.getElementById('quotes').innerHTML=q.map(x=>`<figure><blockquote>«${x[0]}»</blockquote><figcaption>— ${x[1]}</figcaption></figure>`).join('');
+
+const hooks=['Los goblins que talan el árbol, 150 m al sur. Champi prometió encargarse.','Buscar al druida Daegal y el corazón del bosque en la costa sur.','Llegar a la Aldea Dali, al norte del bosque.','¿Quién recluta gente para el Imperio en el oasis?','El grifo que cruzó la luna: ¿volverá?','Vender la glándula de veneno en el mercado adecuado.','La deidad de Ártamo: ¿para qué lo necesita vivo?','La chica del bar, en manos de David.'];
+document.getElementById('hooks').innerHTML=hooks.map(h=>`<li>${h}</li>`).join('');
+
+const lb=document.getElementById('lb'),cv=document.getElementById('cover'),x=document.getElementById('lbx');
+const open=()=>{lb.classList.add('on');x.focus()},close=()=>{lb.classList.remove('on');cv.focus()};
+cv.addEventListener('click',open);x.addEventListener('click',close);
+lb.addEventListener('click',e=>{if(e.target===lb)close()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('on'))close()});
+}
+</script>
+</body>
+</html>
